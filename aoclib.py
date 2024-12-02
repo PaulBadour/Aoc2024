@@ -7,9 +7,8 @@ Edited slightly by me to make this into a library vs a template
 
 '''
 
-import requests
+import requests, os, shutil
 from dotenv import load_dotenv
-import os
 
 dir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(dir, 'cookie.env'))
@@ -51,5 +50,8 @@ def submit(day, level, answer):
         # You will get this if you submit on a level you already solved.
         # Usually happens when you forget to switch from `PART = 1` to `PART = 2`
         print('VERDICT : ALREADY SOLVED')
+
     else:
         print('VERDICT : OK !')
+        if level == 1:
+            shutil.copy(f"day{day}.py", f"day{day}p1.py")
