@@ -4,10 +4,11 @@ https://gist.github.com/MathisHammel/43aa722469a626504de40744dfe0a3da
 This template provides functions to download inputs and submit answers on AoC.
 
 Edited slightly by me to make this into a library vs a template
+Also added some helper functions for common aoc problems
 
 '''
 
-import requests, os, shutil
+import requests, os, shutil, re
 from dotenv import load_dotenv
 
 dir = os.path.abspath(os.path.dirname(__file__))
@@ -55,3 +56,7 @@ def submit(day, level, answer):
         print('VERDICT : OK !')
         if level == 1:
             shutil.copy(f"day{day}.py", f"day{day}p1.py")
+
+
+def getints(s):
+    return list(map(int, re.findall(r'\d+', s)))
