@@ -56,6 +56,8 @@ def submit(day, level, answer):
         print('VERDICT : OK !')
         if level == 1:
             shutil.copy(f"day{day}.py", f"day{day}p1.py")
+        else:
+            os.rename(f"day{day}.py", f"day{day}p2.py")
 
 
 def getints(s):
