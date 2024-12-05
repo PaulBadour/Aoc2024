@@ -59,13 +59,15 @@ def submit(day, level, answer):
         else:
             os.rename(f"day{day}.py", f"day{day}p2.py")
 
-
+# Returns a list of all ints found in a string Ex. "23 105 1 34s90" = [23, 105, 1, 34, 90]
 def getints(s):
     return list(map(int, re.findall(r'\d+', s)))
 
+# Transposes an input by switching rows and columns:  [[1,2,3], [4,5,6], [7,8,9]] = [[1,4,7], [2,5,8],[3,6,9]]
 def flipinp(i):
     return ["".join([i[a][b] for a in range(len(i))]) for b in range(len(i[0]))]
 
+# Gets a list of neighbors in a grid. Diag is if you include diagonals. If order is true, the list will contain None for every spot where there is no neighbor, ex. if a spot is in the top left corner, the first 4 items in list will be None.
 def getNeighbors(grid, x, y, diag=True, order=False):
     n = [None for i in range(9)]
 
@@ -90,3 +92,43 @@ def getNeighbors(grid, x, y, diag=True, order=False):
         return n
     else:
         return [i for i in n if i != None]
+    
+class Node:
+    nodes = []
+    def __init__(self, value, data=None):
+        self.nexts = []
+        self.value = value
+        self.data = None
+        Node.nodes.append(self)
+
+    @staticmethod
+    def findNode(v):
+        for i in Node.nodes:
+            if i.value == v:
+                return i
+        return None
+
+    def addNextNode(self, n):
+        if isinstance(n, Node):
+            self.nexts.append(n)
+        else:
+            self.addNextNode(Node.findNode(n))
+
+    def addNewNode(self, v):
+        n = Node(v)
+        self.nexts.append(n)
+        return n
+
+    def getNextValues(self):
+        return [i.value for i in self.nexts]
+    
+    def dive(self, v):
+        if isinstance(v, Node) and v in self.nexts:
+            return True
+        elif v in self.getNextValues():
+            return True
+
+        for i in self.nexts:
+            if i.dive(v):
+                return True
+        return False
