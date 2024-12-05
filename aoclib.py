@@ -62,3 +62,6 @@ def submit(day, level, answer):
 
 def getints(s):
     return list(map(int, re.findall(r'\d+', s)))
+
+def flipinp(i):
+    return ["".join([i[a][b] for a in range(len(i))]) for b in range(len(i[0]))]
