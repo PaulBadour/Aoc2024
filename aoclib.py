@@ -65,3 +65,28 @@ def getints(s):
 
 def flipinp(i):
     return ["".join([i[a][b] for a in range(len(i))]) for b in range(len(i[0]))]
+
+def getNeighbors(grid, x, y, diag=True, order=False):
+    n = [None for i in range(9)]
+
+    if x > 0:
+        n[1] = grid[x-1][y]
+        if diag and y > 0:
+            n[0] = grid[x-1][y-1]
+        if diag and y < len(grid[0]) - 1:
+            n[2] = grid[x-1][y+1]
+    if x < len(grid) - 1:
+        n[7] = grid[x+1][y]
+        if diag and y > 0:
+            n[6] = grid[x+1][y-1]
+        if diag and y < len(grid[0]) - 1:
+            n[8] = grid[x+1][y+1]
+    if y > 0:
+        n[3] = grid[x][y-1]
+    if y < len(grid[0]) - 1:
+        n[5] = grid[x][y+1]
+
+    if order:
+        return n
+    else:
+        return [i for i in n if i != None]
